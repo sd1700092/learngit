@@ -11,6 +11,10 @@
 .mtj.tmp/
 
 # Package Files #
+.gitignore
+target/
+out/
+.idea/
 *.jar
 *.war
 *.ear
