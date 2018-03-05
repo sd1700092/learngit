@@ -11,7 +11,7 @@ func CreateNode(value int) *Node {
 	return &Node{Value: value}
 }
 
-func (node Node) Print(){
+func (node Node) Print() {
 	fmt.Print(node.Value, " ")
 }
 
@@ -22,8 +22,7 @@ func (node Node) Print(){
 func (node *Node) SetValue(value int) {
 	if node == nil {
 		fmt.Println("Setting Value to nil node. Ignored")
-		return  // 这行必须加，否则报“panic: runtime error: invalid memory address or nil pointer dereference”
+		return // 这行必须加，否则报“panic: runtime error: invalid memory address or nil pointer dereference”
 	}
 	node.Value = value
 }
-
