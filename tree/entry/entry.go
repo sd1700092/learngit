@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 
+	"golang.org/x/tools/container/intsets"
 	"imooc.com/learngo/tree"
 )
 
@@ -19,6 +20,15 @@ func (myNode *myTreeNode) postOrder() {
 	right := myTreeNode{myNode.node.Right}
 	right.postOrder()
 	myNode.node.Print()
+}
+
+func testSparse() {
+	s := intsets.Sparse{}
+	s.Insert(1)
+	s.Insert(1000)
+	s.Insert(100000)
+	fmt.Println(s.Has(1000))
+	fmt.Println(s.Has(10000))
 }
 
 func main() {
@@ -57,4 +67,6 @@ func main() {
 	myRoot := myTreeNode{&root}
 	myRoot.postOrder()
 	fmt.Println()
+
+	testSparse()
 }
