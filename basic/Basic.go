@@ -37,6 +37,15 @@ func printFile(filename string) {
 	}
 }
 
+func test(a interface{}) {
+	switch v := a.(type) {
+	case string:
+		fmt.Println(v, "is string")
+	case int:
+		fmt.Println(v, "is int")
+	}
+}
+
 func main() {
 	fmt.Println("Hello world!")
 	enums()
@@ -45,4 +54,6 @@ func main() {
 		convertToBin(13),
 	)
 	printFile("README.md")
+	test("hello world")
+	test(1)
 }
