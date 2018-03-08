@@ -9,6 +9,6 @@ func (r *Aaaaa) Post(url string, form map[string]string) string {
 	return "OK"
 }
 
-func (r Aaaaa) Get(url string) string {
+func (r *Aaaaa) Get(url string) string {
 	return r.Contents
 }
