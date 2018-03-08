@@ -1,6 +1,6 @@
 package queue
 
-type Queue []interface{}
+type Queue [] interface{}
 
 func (q *Queue) Push(v int) {
 	*q = append(*q, v)
