@@ -11,6 +11,10 @@ type Retriever interface {
 	Get(url string) string
 }
 
+type Poster interface {
+	Post(url string, form map[string]string) string
+}
+
 func download(r Retriever) string {
 	return r.Get("http://www.imooc.com")
 }
@@ -23,6 +27,24 @@ func inspect(r Retriever)  {
 	case *real.Retriever:
 		fmt.Println("UserAgent:", v.UserAgent)
 	}
+}
+
+func post(poster Poster) {
+	poster.Post("http://www.imooc.com",
+		map[string]string{
+			"name": "ccmouse",
+			"course": "golang",
+		})
+}
+
+type RetrieverPoster interface {
+	Retriever
+	Poster
+}
+
+func session(s RetrieverPoster){
+	s.Get()
+	s.Post()
 }
 
 func main() {
