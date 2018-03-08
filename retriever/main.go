@@ -23,13 +23,16 @@ func download(r Retriever) string {
 }
 
 func inspect(r Retriever) {
-	fmt.Printf("% T %v\n", r, r)
+	fmt.Println("Inspecting", r)
+	fmt.Printf("> % T %v\n", r, r)
+	fmt.Printf(" > Type switch:")
 	switch v := r.(type) {
 	case *mock.Aaaaa:
 		fmt.Println("Contents:", v.Contents)
 	case *real.Retriever:
 		fmt.Println("UserAgent:", v.UserAgent)
 	}
+	fmt.Println()
 }
 
 func post(poster Poster) {
@@ -59,7 +62,7 @@ func main() {
 	retriever := mock.Aaaaa{"this is a fake imooc.com"}
 	fmt.Println("Try a session")
 	fmt.Println(session(&retriever))
-	r = retriever
+	r = &retriever
 	inspect(r)
 	r = &real.Retriever{
 		UserAgent: "Mozilla/5.0",
