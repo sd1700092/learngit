@@ -1,4 +1,4 @@
-package main
+package fib
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 	"bufio"
 )
 
-func fibonacci() func() int {
+func Fibonacci() func() int {
 	a, b := 0, 1
 	return func() int {
 		a, b = b, a+b
@@ -36,6 +36,6 @@ func printFileContents(reader io.Reader) {
 }
 
 func main() {
-	var f intGen = fibonacci()
+	var f intGen = Fibonacci()
 	printFileContents(f)
 }
