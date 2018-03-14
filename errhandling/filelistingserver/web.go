@@ -2,14 +2,16 @@ package main
 
 import (
 	"net/http"
-	"imooc.com/learngo/errhandling/filelistingserver/filelisting"
 	"os"
+
+	"imooc.com/learngo/errhandling/filelistingserver/filelisting"
 	//"github.com/gpmgo/gopm/modules/log"
 	"log"
 )
+
 type appHandler func(writer http.ResponseWriter, request *http.Request) error
 
-func errWrapper(handler appHandler) func(http.ResponseWriter, *http.Request){
+func errWrapper(handler appHandler) func(http.ResponseWriter, *http.Request) {
 	return func(writer http.ResponseWriter, request *http.Request) {
 		defer func() {
 			if r := recover(); r != nil {
@@ -18,14 +20,15 @@ func errWrapper(handler appHandler) func(http.ResponseWriter, *http.Request){
 			}
 		}()
 		err := handler(writer, request)
-		if err != nil{
+		if err != nil {
 			log.Printf("Error handling request: %s", err.Error())
 
-			if userErr, ok := err.(userError); ok{
+			// user error
+			if userErr, ok := err.(userError); ok {
 				http.Error(writer, userErr.Message(), http.StatusBadRequest)
 				return
 			}
-
+			// system error
 			code := http.StatusOK
 			switch {
 			case os.IsNotExist(err):
