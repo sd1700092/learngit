@@ -1,10 +1,10 @@
 package fib
 
 import (
-	"fmt"
-	"strings"
-	"io"
 	"bufio"
+	"fmt"
+	"io"
+	"strings"
 )
 
 func Fibonacci() func() int {
