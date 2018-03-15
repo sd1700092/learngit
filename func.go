@@ -19,17 +19,22 @@ func eval(a, b int, op string) (int, error) {
 		q, _ := div(a, b)
 		return q, nil
 	default:
-		return 0, fmt.Errorf("unsupported operation: %s", op)
+		return 0, fmt.Errorf("unsupported operation: %s", op) //返回值就是一个error
 	}
 }
-func div(a int, b int) (q, r int) {
+
+func div(a, b int) (int, int) {
 	return a / b, a % b
 }
 
 func apply(op func(int, int) int, a, b int) int {
 	p := reflect.ValueOf(op).Pointer()
 	opName := runtime.FuncForPC(p).Name()
-	fmt.Println("Calling function %s with args (%d, %d)", opName, a, b)
+	fmt.Printf("Calling function %s with args (%d, %d)\n", opName, a, b)
+	return op(a, b)
+}
+
+func apply1(op func(int, int) int, a, b int) int {
 	return op(a, b)
 }
 
@@ -60,4 +65,9 @@ func main() {
 			return int(math.Pow(float64(a), float64(b)))
 		}, 3, 4))
 	fmt.Println(sum(1, 2, 3, 4, 5))
+
+	fmt.Println(apply1(
+		func(a int, b int) int {
+			return int(math.Pow(float64(a), float64(b)))
+		}, 3, 5))
 }
