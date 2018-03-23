@@ -64,4 +64,11 @@ func main() {
 	variableInitialValue()
 	variableTypeDeduction()
 	consts()
+	for i, err:= range "abc"{
+		fmt.Println(i, err)
+	}
+
+	for i, _:= range []rune("abc"){
+		fmt.Printf("%c", i)
+	}
 }
