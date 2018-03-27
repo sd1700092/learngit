@@ -64,7 +64,7 @@ func channelClose() {
 }
 
 func main() {
-	//chanDemo()
-	//bufferedChannel()
+	chanDemo()
+	bufferedChannel()
 	channelClose()
 }
