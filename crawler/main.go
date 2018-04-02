@@ -1,19 +1,21 @@
 package main
 
 import (
-	"net/http"
-	"io/ioutil"
-	"fmt"
-	"golang.org/x/text/transform"
-	"io"
-	"golang.org/x/text/encoding"
-	"bufio"
-	"golang.org/x/net/html/charset"
-	"regexp"
+	//"net/http"
+	//"io/ioutil"
+	//"fmt"
+	//"golang.org/x/text/transform"
+	//"io"
+	//"golang.org/x/text/encoding"
+	//"bufio"
+	//"golang.org/x/net/html/charset"
+	//"regexp"
+	"imooc.com/learngo/crawler/engine"
+	"imooc.com/learngo/crawler/zhenai/parser"
 )
 
 func main() {
-	resp, err := http.Get("http://www.zhenai.com/zhenghun")
+	/*resp, err := http.Get("http://www.zhenai.com/zhenghun")
 	if err != nil {
 		panic(err)
 	}
@@ -38,10 +40,15 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	//fmt.Printf("%s\n", all)
-	printCityList(all)
+	//fmt.Printf("%s\n", all)*/
+	//printCityList(all)
+	engine.Run(engine.Request{
+		Url: "http://www.zhenai.com/zhenghun",
+		ParserFunc: parser.ParseCityList,
+	})
 }
 
+/*
 func determinEncoding(r io.Reader) encoding.Encoding {
 	bytes, err := bufio.NewReader(r).Peek(1024)
 	if err != nil {
@@ -65,4 +72,4 @@ func printCityList(contents []byte) {
 		fmt.Println()
 	}
 	fmt.Printf("Matches found: %d\n", len(matches))
-}
+}*/
