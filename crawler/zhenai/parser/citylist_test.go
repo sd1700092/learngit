@@ -19,7 +19,8 @@ func TestParseCityList(t *testing.T) {
 		"http://www.zhenai.com/zhenghun/aba", "http://www.zhenai.com/zhenghun/akesu", "http://www.zhenai.com/zhenghun/alashanmeng",
 	}
 	expectedCities := []string{
-		"阿坝", "阿克苏", "阿拉善盟",
+		//"阿坝", "阿克苏", "阿拉善盟",
+		"City 阿坝", "City 阿克苏", "City 阿拉善盟",
 	}
 	if len(result.Requests) != resultSize {
 		t.Errorf("result should have %d requests; but had %d", resultSize, len(result.Requests))
