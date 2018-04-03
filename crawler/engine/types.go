@@ -1,15 +1,15 @@
 package engine
 
 type Request struct {
-	Url string
+	Url        string
 	ParserFunc func([]byte) ParseResult
 }
 
 type ParseResult struct {
 	Requests []Request
-	Items []string
+	Items    []interface{}
 }
 
-func NilParser([]byte) ParseResult{
+func NilParser([]byte) ParseResult {
 	return ParseResult{}
 }
