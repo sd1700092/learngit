@@ -11,6 +11,7 @@ import (
 	//"golang.org/x/net/html/charset"
 	//"regexp"
 	"imooc.com/learngo/crawler/engine"
+	"imooc.com/learngo/crawler/scheduler"
 	"imooc.com/learngo/crawler/zhenai/parser"
 )
 
@@ -42,8 +43,10 @@ func main() {
 	}
 	//fmt.Printf("%s\n", all)*/
 	//printCityList(all)
-	engine.Run(engine.Request{
-		Url: "http://www.zhenai.com/zhenghun",
+
+	e := engine.ConcurrentEngine{Scheduler: &scheduler.SimpleScheduler{}, WorkerCount: 100}
+	e. /*SimpleEngine{}*/ Run(engine.Request{
+		Url:        "http://www.zhenai.com/zhenghun",
 		ParserFunc: parser.ParseCityList,
 	})
 }
