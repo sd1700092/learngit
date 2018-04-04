@@ -44,7 +44,10 @@ func main() {
 	//fmt.Printf("%s\n", all)*/
 	//printCityList(all)
 
-	e := engine.ConcurrentEngine{Scheduler: &scheduler.SimpleScheduler{}, WorkerCount: 100}
+	e := engine.ConcurrentEngine{
+		Scheduler:   &scheduler.QueuedScheduler{},
+		WorkerCount: 100,
+	}
 	e. /*SimpleEngine{}*/ Run(engine.Request{
 		Url:        "http://www.zhenai.com/zhenghun",
 		ParserFunc: parser.ParseCityList,
