@@ -7,6 +7,7 @@ import (
 type ConcurrentEngine struct {
 	Scheduler   Scheduler
 	WorkerCount int
+	ItemChan    chan interface{}
 }
 
 type Scheduler interface {
@@ -29,20 +30,21 @@ func (e *ConcurrentEngine) Run(seeds ...Request) {
 
 	for _, r := range seeds {
 		if isDuplicate(r.Url) {
-			//log.Printf("Duplicate request: %s", r.Url)
+			log.Printf("Duplicate request: %s", r.Url)
 			continue
 		}
 		e.Scheduler.Submit(r)
 	}
 
-	itemCount := 0
+	//itemCount := 0
 	for {
 		result := <-out
 		for _, item := range result.Items {
 			//if _, ok := item.(model.Profile); ok {
-			log.Printf("Got item #%d, %v\n", itemCount, item)
-			itemCount++
+			//log.Printf("Got item #%d, %v\n", itemCount, item)
+			//itemCount++
 			//}
+			go func() { e.ItemChan <- item }()
 		}
 
 		for _, request := range result.Requests {

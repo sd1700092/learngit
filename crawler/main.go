@@ -11,6 +11,7 @@ import (
 	//"golang.org/x/net/html/charset"
 	//"regexp"
 	"imooc.com/learngo/crawler/engine"
+	"imooc.com/learngo/crawler/persist"
 	"imooc.com/learngo/crawler/scheduler"
 	"imooc.com/learngo/crawler/zhenai/parser"
 )
@@ -47,15 +48,16 @@ func main() {
 	e := engine.ConcurrentEngine{
 		Scheduler:   &scheduler.QueuedScheduler{},
 		WorkerCount: 100,
+		ItemChan:    persist.ItemSaver(),
 	}
-	//e. /*SimpleEngine{}*/ Run(engine.Request{
-	//	Url:        "http://www.zhenai.com/zhenghun",
-	//	ParserFunc: parser.ParseCityList,
-	//})
 	e.Run(engine.Request{
-		Url:        "http://www.zhenai.com/zhenghun/shanghai",
-		ParserFunc: parser.ParseCity,
+		Url:        "http://www.zhenai.com/zhenghun",
+		ParserFunc: parser.ParseCityList,
 	})
+	//e.Run(engine.Request{
+	//	Url:        "http://www.zhenai.com/zhenghun/shanghai",
+	//	ParserFunc: parser.ParseCity,
+	//})
 }
 
 /*
