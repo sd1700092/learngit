@@ -1,7 +1,6 @@
 package view
 
 import (
-	"html/template"
 	"os"
 	"testing"
 
@@ -10,13 +9,15 @@ import (
 	common "imooc.com/learngo/crawler/model"
 )
 
-func TestTemplate(t *testing.T) {
-	template := template.Must(template.ParseFiles("template.html"))
+//func TestTemplate(t *testing.T) {
+func TestSearchResultView_Render(t *testing.T) {
+	//template := template.Must(template.ParseFiles("template.html"))
+	view := CreateSearchResultView("template.html")
 	out, err := os.Create("template.test.html")
 	page := model.SearchResult{}
 	page.Hits = 123
 	item := engine.Item{
-		Url:  "http://album.zhenai.com/u/108906739",
+		Url:  "http://album.zhenai.com/u/1314495053",
 		Type: "zhenai",
 		Id:   "108906739",
 		Payload: common.Profile{
@@ -37,7 +38,8 @@ func TestTemplate(t *testing.T) {
 		page.Items = append(page.Items, item)
 	}
 
-	err = template.Execute( /*os.Stdout*/ out, page)
+	//err = template.Execute( /*os.Stdout*/ out, page)
+	err = view.Render(out, page)
 	if err != nil {
 		panic(err)
 	}
