@@ -12,16 +12,16 @@ func TestParseCityList(t *testing.T) {
 		panic(err)
 	}
 	//fmt.Printf("%s\n", contents)
-	result := ParseCityList(contents)
+	result := ParseCityList(contents, "")
 
 	const resultSize = 470
 	expectedUrls := []string{
 		"http://www.zhenai.com/zhenghun/aba", "http://www.zhenai.com/zhenghun/akesu", "http://www.zhenai.com/zhenghun/alashanmeng",
 	}
-	expectedCities := []string{
-		//"阿坝", "阿克苏", "阿拉善盟",
-		"City 阿坝", "City 阿克苏", "City 阿拉善盟",
-	}
+	//expectedCities := []string{
+	//	//"阿坝", "阿克苏", "阿拉善盟",
+	//	"City 阿坝", "City 阿克苏", "City 阿拉善盟",
+	//}
 	if len(result.Requests) != resultSize {
 		t.Errorf("result should have %d requests; but had %d", resultSize, len(result.Requests))
 	}
@@ -35,9 +35,9 @@ func TestParseCityList(t *testing.T) {
 		}
 	}
 
-	for i, city := range expectedCities {
-		if result.Items[i] != city {
-			t.Errorf("expected city #%d: %s, but was %s", i, city, result.Items[i])
-		}
-	}
+	//for i, city := range expectedCities {
+	//	if result.Items[i] != city {
+	//		t.Errorf("expected city #%d: %s, but was %s", i, city, result.Items[i])
+	//	}
+	//}
 }
