@@ -42,7 +42,8 @@ func main() {
 	}
 	//fmt.Printf("%s\n", all)*/
 	//printCityList(all)
-	engine.Run(engine.Request{
+	e:=engine.SimpleEngine{}
+	e.Run(engine.Request{
 		Url: "http://www.zhenai.com/zhenghun",
 		ParserFunc: parser.ParseCityList,
 	})
