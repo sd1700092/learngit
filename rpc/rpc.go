@@ -4,6 +4,6 @@ package rpcdemo
 type DemoService struct{}
 
 //Go语言语法框架对于RPC的要求就是要有args和result两个参数
-func (DemoService) Div(args, result) error {
-
-}
+//func (DemoService) Div(args, result) error {
+//
+//}
