@@ -11,10 +11,18 @@ import (
 	"golang.org/x/text/encoding"
 	"golang.org/x/text/encoding/unicode"
 	"golang.org/x/text/transform"
+	"time"
 )
 
+var rateLimiter = time.Tick(10 * time.Millisecond)
+
 func Fetch(url string) ([]byte, error) {
-	resp, err := http.Get(url)
+	<- rateLimiter
+	request, err := http.NewRequest(http.MethodGet, url, nil)
+	request.Header.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.137 Safari/537.36 LBBROWSER")
+	client := http.Client{}
+	resp, err := client.Do(request)
+	//resp, err := http.Get(url)
 	if err != nil {
 		return nil, err
 	}
