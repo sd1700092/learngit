@@ -7,6 +7,7 @@ import (
 )
 
 type SimpleEngine struct {
+
 }
 
 func (e SimpleEngine) Run(seeds ...Request) {
