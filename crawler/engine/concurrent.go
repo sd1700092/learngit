@@ -2,6 +2,7 @@ package engine
 
 import (
 	"log"
+	"imooc.com/learngo/crawler/model"
 )
 
 type ConcurrentEngine struct {
@@ -28,20 +29,42 @@ func (e *ConcurrentEngine) Run(seeds ...Request) {
 	}
 
 	for _, r := range seeds {
+		if isDuplicate(r.Url) {
+			log.Printf("Duplicate request: %s", r.Url)
+			continue
+		}
 		e.Scheduler.Submit(r)
 	}
 
-	itemCount := 0
+	profileCount := 0
+	//itemCount := 0
 	for {
 		result := <-out
 		for _, item := range result.Items {
-			log.Printf("Got item #%d: %v\n", itemCount, item)
-			itemCount++
+			if _, ok := item.(model.Profile); ok {
+				log.Printf("Got profile #%d: %v\n", profileCount, item)
+				profileCount++
+			}
+			//log.Printf("Got item #%d: %v", itemCount, item)
 		}
 		for _, request := range result.Requests {
+			if (isDuplicate(request.Url)) {
+				log.Printf("Duplicate request: %s", request.Url)
+				continue
+			}
 			e.Scheduler.Submit(request)
 		}
 	}
+}
+
+var visitedUrls = make(map[string]bool)
+
+func isDuplicate(url string) bool {
+	if visitedUrls[url] {
+		return true
+	}
+	visitedUrls[url] = true
+	return false
 }
 
 func createWorker(in chan Request, out chan ParseResult, ready ReadyNotifier) {
