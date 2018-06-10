@@ -30,7 +30,7 @@ func (e *ConcurrentEngine) Run(seeds ...Request) {
 
 	for _, r := range seeds {
 		if isDuplicate(r.Url) {
-			log.Printf("Duplicate request: %s", r.Url)
+			//log.Printf("Duplicate request: %s", r.Url)
 			continue
 		}
 		e.Scheduler.Submit(r)
@@ -45,11 +45,11 @@ func (e *ConcurrentEngine) Run(seeds ...Request) {
 				log.Printf("Got profile #%d: %v\n", profileCount, item)
 				profileCount++
 			}
-			//log.Printf("Got item #%d: %v", itemCount, item)
+			log.Printf("Got item #%d: %v", 0, item)
 		}
 		for _, request := range result.Requests {
 			if (isDuplicate(request.Url)) {
-				log.Printf("Duplicate request: %s", request.Url)
+				//log.Printf("Duplicate request: %s", request.Url)
 				continue
 			}
 			e.Scheduler.Submit(request)
