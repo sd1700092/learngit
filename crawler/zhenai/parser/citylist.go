@@ -14,14 +14,9 @@ func ParseCityList(contents []byte) engine.ParseResult {
 	matches := re.FindAllSubmatch(contents, -1)
 	result := engine.ParseResult{}
 	for _, m := range matches {
+		// 不用生成city名字了，如果要的话还可以打log
 		result.Items = append(result.Items, "City "+string(m[2]))
 		result.Requests = append(result.Requests, engine.Request{Url: string(m[1]), ParserFunc: ParseCity})
-		//fmt.Printf("City: %s, URL: %s\n", m[2], m[1])
-		//if i == 10 {
-		//	fmt.Printf("only testing %d pages, then break", i)
-		//	break
-		//}
 	}
-	//fmt.Printf("Matches found: %d\n", len(matches))
 	return result
 }

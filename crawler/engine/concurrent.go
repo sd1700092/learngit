@@ -1,13 +1,10 @@
 package engine
 
-import (
-	"log"
-	"imooc.com/learngo/crawler/model"
-)
-
 type ConcurrentEngine struct {
 	Scheduler   Scheduler
 	WorkerCount int
+	// 专门为item的存储搭一个管道ItemChan
+	ItemChan chan interface{}
 }
 
 type Scheduler interface {
@@ -30,26 +27,20 @@ func (e *ConcurrentEngine) Run(seeds ...Request) {
 
 	for _, r := range seeds {
 		if isDuplicate(r.Url) {
-			log.Printf("Duplicate request: %s; map size: %d\n", r.Url, len(visitedUrls))
+			//log.Printf("Duplicate request: %s; map size: %d\n", r.Url, len(visitedUrls))
 			continue
 		}
 		e.Scheduler.Submit(r)
 	}
 
-	profileCount := 0
-	//itemCount := 0
 	for {
 		result := <-out
 		for _, item := range result.Items {
-			if _, ok := item.(model.Profile); ok {
-				log.Printf("Got profile #%d: %v\n", profileCount, item)
-				profileCount++
-			}
-			//log.Printf("Got item #%d: %v", 0, item)
+			go func() {e.ItemChan <- item}()
 		}
 		for _, request := range result.Requests {
 			if (isDuplicate(request.Url)) {
-				log.Printf("Duplicate request: %s; map size: %d\n", request.Url, len(visitedUrls))
+				//log.Printf("Duplicate request: %s; map size: %d\n", request.Url, len(visitedUrls))
 				continue
 			}
 			e.Scheduler.Submit(request)

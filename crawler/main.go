@@ -13,6 +13,7 @@ import (
 	"imooc.com/learngo/crawler/engine"
 	"imooc.com/learngo/crawler/zhenai/parser"
 	"imooc.com/learngo/crawler/scheduler"
+	"imooc.com/learngo/crawler/persist"
 )
 
 func main() {
@@ -20,6 +21,7 @@ func main() {
 		//Scheduler: &scheduler.SimpleScheduler{},
 		Scheduler: &scheduler.QueuedScheduler{},
 		WorkerCount:100,
+		ItemChan: persist.ItemSaver(),
 	}
 	e.Run(engine.Request{
 		Url:        "http://www.zhenai.com/zhenghun",
