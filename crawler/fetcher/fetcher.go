@@ -7,17 +7,18 @@ import (
 	"log"
 	"net/http"
 
+	"time"
+
 	"golang.org/x/net/html/charset"
 	"golang.org/x/text/encoding"
 	"golang.org/x/text/encoding/unicode"
 	"golang.org/x/text/transform"
-	"time"
 )
 
 var rateLimiter = time.Tick(10 * time.Millisecond)
 
 func Fetch(url string) ([]byte, error) {
-	<- rateLimiter
+	<-rateLimiter
 	request, err := http.NewRequest(http.MethodGet, url, nil)
 	request.Header.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.137 Safari/537.36 LBBROWSER")
 	client := http.Client{}
@@ -27,14 +28,6 @@ func Fetch(url string) ([]byte, error) {
 		return nil, err
 	}
 	defer resp.Body.Close()
-
-	//if resp.StatusCode == http.StatusOK {
-	//	all, err := ioutil.ReadAll(resp.Body)
-	//	if err != nil {
-	//		panic(err)
-	//	}
-	//	fmt.Printf("%s\n", all)
-	//}
 
 	if resp.StatusCode != http.StatusOK {
 		//fmt.Println("Error: status code", resp.StatusCode)

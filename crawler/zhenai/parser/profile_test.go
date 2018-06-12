@@ -16,7 +16,7 @@ func TestParseProfile(t *testing.T) {
 	if len(result.Items) != 1 {
 		t.Errorf("Items should contain 1 element; but was %v", result.Items)
 	}
-	profile := result.Items[0].(*model.Profile)
+	profile := result.Items[0].(model.Profile)
 	expected := model.Profile{
 		Name:       "风中的蒲公英",
 		Gender:     "女",
@@ -32,7 +32,7 @@ func TestParseProfile(t *testing.T) {
 		Education:  "中专",
 		Car:        "未购车",
 	}
-	if *profile != expected {
-		t.Errorf("expected: %v, but was %v", expected, profile)
+	if profile != expected {
+		t.Errorf("expected: %v\n, but was %v", expected, profile)
 	}
 }

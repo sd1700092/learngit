@@ -2,10 +2,12 @@ package parser
 
 import (
 	"regexp"
+
 	"imooc.com/learngo/crawler/engine"
 )
 
-const cityListRe = `<a href="(http://www.zhenai.com/zhenghun/\w+)"[^>]*>([^<]+)</a>`
+// <a target="_blank" href="http://city.zhenai.com/beijing">北京</a>
+const cityListRe = `<a .* href="(http://www.zhenai.com/zhenghun/\w+)"[^>]*>([^<]+)</a>`
 
 func ParseCityList(contents []byte) engine.ParseResult {
 	re := regexp.MustCompile(cityListRe)
