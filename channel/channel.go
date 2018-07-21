@@ -13,6 +13,11 @@ func worker(id int, c chan int) {
 		}
 		fmt.Printf("Worker %d received %c\n", id, n)
 	}*/
+
+	for {
+		fmt.Printf("Worker %d received %c\n", id, <-c)
+	}
+
 	for n := range c {
 		fmt.Printf("Worker %d received %d\n", id, n)
 	}
@@ -59,15 +64,15 @@ func channelClose() {
 	c <- 'b'
 	c <- 'c'
 	c <- 'd'
-	close(c)
+	//close(c)
 	time.Sleep(time.Millisecond)
 }
 
 func main() {
-	fmt.Println("Channel as first-class citizen")
-	chanDemo()
-	fmt.Println("Buffered channel")
-	bufferedChannel()
+	//fmt.Println("Channel as first-class citizen")
+	//chanDemo()
+	//fmt.Println("Buffered channel")
+	//bufferedChannel()
 	fmt.Println("Channel close and range")
 	channelClose()
 }
